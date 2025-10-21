@@ -158,18 +158,25 @@ p2
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio1.pdf``.
 
 ```{r Solucion ejercicio 1}
+rm(list=ls())
+
 # En primer lugar, cargamos el fichero
 load(file = "data/weatherAUS.RData")
 
 # Creamos el objeto ggplot pedido
 library(ggplot2)
 grafico1 <- ggplot(ds, aes(x = MinTemp, y = MaxTemp))
+# grafico1 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp)) + geom_point()
 
 grafico1 + geom_point()
 
 grafico2 <- ggplot(ds, aes(x = MinTemp, y = MaxTemp, color = RainTomorrow))
+# grafico2 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp, color = RainTomorrow)) + geom_point()
 
 grafico2 + geom_point()
+
+# Una forma de cambiar los parámetros por defecto es:
+# grafico2 + scale_color_manual(values = c('blue', 'green'))
 
 grafico3 <- grafico2 + ggtitle("Temperaturas máximas y mínimas")
 
@@ -187,9 +194,37 @@ ggsave('figs/Ejercicio1.pdf')
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio2.pdf``.
 
 ```{r Solucion ejercicio 2}
+rm(list=ls())
+library(ggplot2)
+load(file = "data/weatherAUS.RData")
+
+grafico1 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am)) + geom_point()
+
+grafico1
+
+# Parámetro shape para forma del punto
+
+grafico2 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am, shape = RainToday)) + geom_point()
+
+# Si pongo geom_point(aes(RainToday)) si queremos que solo afecte a la capa de puntos
+
+grafico2
+
+grafico3 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am, color = RainToday)) + geom_point()
+
+grafico3
+
+grafico4 <- grafico3 + labs(title = "Temperatura y presión a las 9 am",
+       subtitle = "Coloreado según la lluvia",
+       x = "Temperatura",
+       y = "Presión")
+
+grafico4
 
 ggsave('figs/Ejercicio2.pdf')
 ```
+
+Observamos que con el color se ve mejor la información que introduce la variable ``RainToday`` (con la forma es difícil de distinguir).
 
 ### **Ejercicio 3**
 
@@ -203,8 +238,10 @@ ggsave('figs/Ejercicio2.pdf')
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio3.pdf``.
 
 ```{r Solucion ejercicio 3}
+rm(list = ls())
 
-ggsave('figs/Ejercicio3.pdf') # se almacena el último gráfico generado
+
+# ggsave('figs/Ejercicio3.pdf') # se almacena el último gráfico generado
 ```
 
 ## Gráficos de línea con **ggplot2**

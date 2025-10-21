@@ -350,10 +350,10 @@ str(DatosEjer4)
 grafico1 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point()
 grafico1
 
-grafico2 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_line()
+grafico2 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point() + geom_line()
 grafico2
 
-grafico3 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_line(aes(linetype = Fabricante))
+grafico3 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point() + geom_line(aes(linetype = Fabricante))
 grafico3
 
 grafico4 <- grafico3 + labs(title = "Ventas mensuales de diferentes compañías tecnológicas")
@@ -415,8 +415,18 @@ El fichero ``iceRiver.RData`` contiene información del caudal de dos ríos isla
   * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio5.pdf``.
 
 ```{r Solucion ejercicio 6 }
+rm(list = ls())
+library(ggplot2)
+load(file = "data/iceRiver.RData")
+library(latex2exp)  # Para incluir código latex en una leyenda
 
+# Tan solo la x es común para las dos series temporales. No propagar todo para las siguientes capas
+grafico1 <- ggplot(ice.river.df, aes(x = time)) + geom_line(aes(y = flow.vat), color = "red") + geom_line(aes(y = flow.jok), color = "blue") +
+  labs(title = "Caudales de los ríos islandeses Vatnsdakksa (azul) y Jokulsa Eystri (rojo)", x = 'Tiempo (años)', y = TeX('Caudal($m^3/s$)'))
+# Lo que son variables siempre dentro de aes, las constantes fuera
+grafico1
 
+ggsave('figs/Ejercicio5.pdf')
 ```
 
 
